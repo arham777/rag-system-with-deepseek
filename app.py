@@ -9,10 +9,6 @@ from langchain.chains.combine_documents.stuff import StuffDocumentsChain
 from langchain.chains import RetrievalQA
 from langchain_groq import ChatGroq
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from dotenv import load_dotenv
-
-# Load environment variables
-load_dotenv()
 
 # Page configuration
 st.set_page_config(
@@ -76,18 +72,8 @@ with st.sidebar:
 st.title("📚 Document Q&A Assistant")
 st.markdown("### Upload your document and ask questions")
 
-# Get API key from environment variable or Streamlit secrets
-def get_groq_api_key():
-    # First try to get from environment variable
-    api_key = os.getenv("GROQ_API_KEY")
-    if api_key:
-        return api_key
-    
-    # Then try to get from Streamlit secrets
-    if 'GROQ_API_KEY' in st.secrets:
-        return st.secrets['GROQ_API_KEY']
-    
-    return None
+# Groq API Key (replace with your actual key)
+GROQ_API_KEY = "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"
 
 def setup_qa_chain(pdf_content):
     # Save temporary file
@@ -113,7 +99,7 @@ def setup_qa_chain(pdf_content):
     
     # Initialize LLM
     llm = ChatGroq(
-        groq_api_key=get_groq_api_key(),
+        groq_api_key=GROQ_API_KEY,
         temperature=0,
         model_name="deepseek-r1-distill-llama-70b"
     )
